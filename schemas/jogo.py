@@ -5,7 +5,7 @@ from model.jogo import Jogo
 class JogoSchema(BaseModel):
     """ Define como um novo jogo a ser inserido deve ser representado """
 
-    nome_jogo: str = "Catan"
+    nome_jogo: str = "Jogo Exemplo"
     quantidade_minima: Optional[int] = 1
     quantidade_maxima: Optional[int] = 5
     idade_minima: Optional[int] = 5
@@ -15,7 +15,7 @@ class JogoSchema(BaseModel):
 
 class JogoViewSchema(BaseModel):
     id_jogo: int = 1
-    nome_jogo: str = "Catan"
+    nome_jogo: str = "Jogo Exemplo"
     quantidade_minima: Optional[int] = 1
     quantidade_maxima: Optional[int] = 5
     idade_minima: Optional[int] = 5
@@ -32,7 +32,7 @@ class JogosBuscaIdSchema(BaseModel):
 
 class JogosUpdateSchema(BaseModel):
     id_jogo: int = 1
-    nome_jogo: str = "Catan"
+    nome_jogo: str = "Jogo Exemplo"
     quantidade_minima: Optional[int] = 1
     quantidade_maxima: Optional[int] = 5
     idade_minima: Optional[int] = 5
