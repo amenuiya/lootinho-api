@@ -1,68 +1,65 @@
-from pydantic import BaseModel, Field, field_validator
-from datetime import date
-from typing import List, Optional
+from pydantic import BaseModel
+from typing import List, Optional, Union
 from model.expansao import Expansao
 
-
 class ExpansaoSchema(BaseModel):
-    nome_expansao: Optional[str] = None
-    quantidade_minima: Optional[int] = None
-    quantidade_maxima: Optional[int] = None
-    idade_minima: Optional[int] = None
-    editora: Optional[str] = None
-    avaliacao: Optional[float] = None
-    data_aquisicao: str
-    id_jogo: Optional[int] = None
-
-    @field_validator("avaliacao", mode="before")
-    @classmethod
-    def empty_string_to_none(cls, v):
-        if v == "":
-            return None
-        return v
-
+    nome_expansao: Optional[str] = "Expansão Exemplo"
+    quantidade_minima: Optional[int] = 1
+    quantidade_maxima: Optional[int] = 100
+    idade_minima: Optional[int] = 1
+    editora: Optional[str] = "Editora Exemplo"
+    avaliacao: Optional[int] = 1
+    id_jogo: int = 1
 
 class ExpansaoViewSchema(BaseModel):
-    id_expansao: int = Field(..., description="ID da expansão")
-    nome_expansao: Optional[str] = Field(None, description="Nome da expansão")
-    quantidade_minima: Optional[int] = Field(None, description="Quantidade mínima de jogadores")
-    quantidade_maxima: Optional[int] = Field(None, description="Quantidade máxima de jogadores")
-    idade_minima: Optional[int] = Field(None, description="Idade mínima recomendada")
-    editora: Optional[str] = Field(None, description="Editora da expansão")
-    avaliacao: Optional[float] = Field(None, description="Avaliação da expansão")
-    data_aquisicao: Optional[str] = Field(None, description="Data de aquisição no formato DD-MM-YYYY")
-    id_jogo: int = Field(None, description="ID do jogo base para a expansão")
+    id_expansao: int = 1
+    nome_expansao: Optional[str] = "Expansão Exemplo"
+    quantidade_minima: Optional[int] = 1
+    quantidade_maxima: Optional[int] = 100
+    idade_minima: Optional[int] = 1
+    editora: Optional[str] = "Editora Exemplo"
+    avaliacao: Optional[int] = 1
+    id_jogo: int = 1
 
-    model_config = {
-        "from_attributes": True
-    }
+class ExpansaoViewComJogoSchema(BaseModel):
+    id_expansao: int = 1
+    nome_expansao: Optional[str] = "Expansão Exemplo"
+    quantidade_minima: Optional[int] = 1
+    quantidade_maxima: Optional[int] = 100
+    idade_minima: Optional[int] = 1
+    editora: Optional[str] = "Editora Exemplo"
+    avaliacao: Optional[int] = 1
+    id_jogo: int = 1
+    nome_jogo: Optional[str] = "Jogo Exemplo"
 
 class ListagemExpansoesSchema(BaseModel):
     """ Representa uma lista de expansões """
-    expansoes: List[ExpansaoViewSchema]
+    expansoes: List[ExpansaoViewComJogoSchema]
 
 class ExpansaoBuscaIdSchema(BaseModel):
     """ Define como deve ser a estrutura que representa a busca por ID.
     """
-    id_expansao: int = Field(..., description="ID da expansão a ser buscada")
+    id_expansao: int = 1
 
 class ExpansaoUpdateSchema(BaseModel):
-    id_expansao: int = Field(..., description="ID da expansão a ser atualizada")
-    nome_expansao: Optional[str] = Field(None, description="Nome da expansão")
-    quantidade_minima: Optional[int] = Field(None, description="Quantidade mínima de jogadores")
-    quantidade_maxima: Optional[int] = Field(None, description="Quantidade máxima de jogadores")
-    idade_minima: Optional[int] = Field(None, description="Idade mínima recomendada")
-    editora: Optional[str] = Field(None, description="Editora da expansão")
-    avaliacao: Optional[float] = Field(None, description="Avaliação da expansão")
-    data_aquisicao: Optional[str] = Field(None, description="Data de aquisição no formato DD-MM-YYYY")
-    id_jogo: int = Field(None, description="ID do jogo base para a expansão")
+    id_expansao: int = 1
+    nome_expansao: Optional[str] = "Expansão Exemplo"
+    quantidade_minima: Optional[int] = 1
+    quantidade_maxima: Optional[int] = 100
+    idade_minima: Optional[int] = 1
+    editora: Optional[str] = "Editora Exemplo"
+    avaliacao: Optional[int] = 1
+    id_jogo: int = 1
+    nome_jogo: str = "Jogo Exemplo"
 
 class ExpansaoDeleteSchema(BaseModel):
-    id_expansao: int = Field(..., description="ID da Expansão a ser deletada")
+    id_expansao: int = 1
 
 def apresenta_todas_expansoes(expansoes: List[Expansao]):
     result = []
     for expansao in expansoes:
+        jogo = getattr(expansao, "jogo", None)
+        nome_jogo = jogo.nome_jogo if jogo else None
         result.append({
             "id_expansao": expansao.id_expansao,
             "nome_expansao": expansao.nome_expansao,
@@ -71,7 +68,7 @@ def apresenta_todas_expansoes(expansoes: List[Expansao]):
             "idade_minima": expansao.idade_minima,
             "editora": expansao.editora,
             "avaliacao": expansao.avaliacao,
-            "data_aquisicao": expansao.data_aquisicao,
-            "id_jogo": expansao.id_jogo
+            "id_jogo": expansao.id_jogo,
+            "nome_jogo": nome_jogo
         })
     return {"expansoes": result}
