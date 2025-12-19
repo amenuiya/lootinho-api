@@ -5,8 +5,8 @@ from model.expansao import Expansao
 class ExpansaoSchema(BaseModel):
     nome_expansao: Optional[str] = "Expansão Exemplo"
     quantidade_minima: Optional[int] = 1
-    quantidade_maxima: Optional[int] = 100
-    idade_minima: Optional[int] = 1
+    quantidade_maxima: Optional[int] = 5
+    idade_minima: Optional[int] = 5
     editora: Optional[str] = "Editora Exemplo"
     avaliacao: Optional[int] = 1
     id_jogo: int = 1
