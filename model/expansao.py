@@ -14,7 +14,8 @@ class Expansao(Base):
     avaliacao = Column(Integer, nullable=True)
     id_jogo = Column(Integer, ForeignKey('jogo.id_jogo'), nullable=False)
 
-    jogo = relationship("Jogo")
+    jogo = relationship("Jogo", back_populates="expansoes")
+
     
 
     def __init__(self, nome_expansao, quantidade_minima, quantidade_maxima, idade_minima, editora, avaliacao, id_jogo):

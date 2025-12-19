@@ -1,4 +1,4 @@
-# Lootinho API
+# 🎲 Lootinho API
 
 API desenvolvida em **Python** como projeto acadêmico, com o objetivo de praticar conceitos de **APIs REST**, **modelagem de dados**, **validação com schemas** e **persistência em banco de dados**.
 
@@ -45,10 +45,11 @@ http://localhost:5001
 ```
 
 ## 🛠️ Tecnologias Utilizadas
-
+```
 - Python  
 - Flask + Flask-OpenAPI3  
 - SQLAlchemy  
 - SQLite  
 - Swagger (OpenAPI)  
 - HTML, CSS e JavaScript  
+```

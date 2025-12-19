@@ -1,4 +1,5 @@
-from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy import Column, String, Integer
+from sqlalchemy.orm import relationship
 from model.base import Base
 
 class Jogo(Base):
@@ -11,6 +12,9 @@ class Jogo(Base):
     idade_minima = Column(Integer, nullable=True)
     editora = Column(String(100), nullable=True)
     avaliacao = Column(Integer, nullable=True)
+
+    expansoes = relationship("Expansao", back_populates="jogo", cascade="all, delete-orphan")
+
 
     def __init__(self, nome_jogo, quantidade_minima, quantidade_maxima, idade_minima, editora, avaliacao):
         self.nome_jogo = nome_jogo

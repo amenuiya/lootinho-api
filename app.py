@@ -142,6 +142,13 @@ def del_jogo(query: JogosDeleteSchema):
     jogo_id = query.id_jogo
     try:
         session = Session()
+        jogo = session.query(Jogo).filter(Jogo.id_jogo == query.id_jogo).first()
+
+        if jogo.expansoes:
+            return {
+                "error": "Este jogo possui expansões vinculadas. Remova as expansões antes."
+            }, 409
+
         count = session.query(Jogo).filter(Jogo.id_jogo == jogo_id).delete()
         session.commit()
 
